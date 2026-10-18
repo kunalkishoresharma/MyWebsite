@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Rich Editorial Burgundy Gradient -->
+    <linearGradient id="kkBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9B2232" />
+      <stop offset="45%" stop-color="#7D1826" />
+      <stop offset="100%" stop-color="#460B13" />
+    </linearGradient>
+
+    <!-- Warm Gold Gradient for Borders and Accents -->
+    <linearGradient id="kkGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBF2DC" />
+      <stop offset="40%" stop-color="#E5C78A" />
+      <stop offset="100%" stop-color="#BA8B38" />
+    </linearGradient>
+
+    <!-- Antique Ivory Gradient for Monogram Letters -->
+    <linearGradient id="kkIvoryGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="70%" stop-color="#F7F1E5" />
+      <stop offset="100%" stop-color="#E8DCBE" />
+    </linearGradient>
+
+    <!-- Deep Tactile Letterpress Shadow -->
+    <filter id="kkShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#1E0307" flood-opacity="0.7" />
+    </filter>
+
+    <!-- Subtle Bevel Highlight for Monogram -->
+    <filter id="kkInnerGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Base Squircle (Authoritative Broadsheet Badge) -->
+  <rect x="16" y="16" width="480" height="480" rx="104" fill="url(#kkBgGrad)" />
+
+  <!-- Outer Fine Gold Border -->
+  <rect x="34" y="34" width="444" height="444" rx="86" fill="none" stroke="url(#kkGoldGrad)" stroke-width="3.5" stroke-opacity="0.8" />
+
+  <!-- Inner Archival Dashed Rule -->
+  <rect x="46" y="46" width="420" height="420" rx="76" fill="none" stroke="#F8F5EE" stroke-width="1.2" stroke-opacity="0.28" stroke-dasharray="10 5" />
+
+  <!-- Corner Ornamental Accent Diamonds -->
+  <g fill="url(#kkGoldGrad)">
+    <polygon points="56,51 61,56 56,61 51,56" opacity="0.85" />
+    <polygon points="456,51 461,56 456,61 451,56" opacity="0.85" />
+    <polygon points="56,451 61,456 56,461 51,456" opacity="0.85" />
+    <polygon points="456,451 461,456 456,461 451,456" opacity="0.85" />
+  </g>
+
+  <!-- Top Imperial Diamond Star -->
+  <g transform="translate(256, 88)" fill="url(#kkGoldGrad)">
+    <path d="M 0,-15 Q 0,0 15,0 Q 0,0 0,15 Q 0,0 -15,0 Q 0,0 0,-15 Z" />
+    <circle cx="0" cy="0" r="2.2" fill="#FFFFFF" />
+  </g>
+
+  <!-- Monogram Letters KK -->
+  <g filter="url(#kkShadow)">
+    <text 
+      x="256" 
+      y="336" 
+      font-family="'Cinzel', 'Playfair Display', Georgia, 'Times New Roman', serif" 
+      font-size="238" 
+      font-weight="900" 
+      letter-spacing="-14" 
+      text-anchor="middle" 
+      fill="url(#kkIvoryGrad)"
+    >KK</text>
+  </g>
+
+  <!-- Bottom Archival Divider Bar -->
+  <g transform="translate(256, 388)">
+    <!-- Left Thin Rule -->
+    <line x1="-140" y1="0" x2="-28" y2="0" stroke="url(#kkGoldGrad)" stroke-width="2.5" stroke-opacity="0.8" stroke-linecap="round" />
+    <!-- Center Emblem Diamond -->
+    <polygon points="0,-7 7,0 0,7 -7,0" fill="url(#kkGoldGrad)" />
+    <circle cx="0" cy="0" r="1.5" fill="#FFFFFF" />
+    <!-- Right Thin Rule -->
+    <line x1="28" y1="0" x2="140" y2="0" stroke="url(#kkGoldGrad)" stroke-width="2.5" stroke-opacity="0.8" stroke-linecap="round" />
+  </g>
+
+  <!-- Archival Micro-Label -->
+  <text 
+    x="256" 
+    y="426" 
+    font-family="'Cinzel', 'JetBrains Mono', Georgia, monospace" 
+    font-size="24" 
+    font-weight="700" 
+    letter-spacing="10" 
+    fill="url(#kkGoldGrad)" 
+    fill-opacity="0.9" 
+    text-anchor="middle"
+  >SHARMA</text>
+</svg>

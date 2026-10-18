@@ -1,0 +1,22 @@
+{
+  "name": "kunal-kishore-sharma-portfolio",
+  "version": "1.0.0",
+  "description": "Editorial Style Personal Website & Architectural Dossier for Kunal Kishore Sharma - Lead Software Engineer",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "editorial",
+    "portfolio",
+    "kunal-kishore-sharma",
+    "lead-frontend-engineer",
+    "react",
+    "typescript",
+    "wcag",
+    "accessibility"
+  ],
+  "author": "Kunal Kishore Sharma <kunalkishoresharma.kk@gmail.com>",
+  "license": "MIT"
+}

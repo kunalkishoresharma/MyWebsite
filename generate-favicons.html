@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KK Favicon Generator</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:wght@700;900&display=swap">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #141518;
+      color: #F8F5EE;
+      padding: 2rem;
+      text-align: center;
+    }
+    .preview-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    .preview-card {
+      background: #1F2126;
+      border: 1px solid #3E4249;
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto 0.75rem auto;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    #status {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #E5C78A;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kunal Kishore Sharma — KK Favicon Production Suite</h1>
+  <p>Generating pixel-perfect multi-resolution icons (16px, 32px, 180px, 192px, 512px, and binary .ico)...</p>
+
+  <div class="preview-container">
+    <div class="preview-card">
+      <canvas id="c512" width="512" height="512"></canvas>
+      <div>512 x 512 (PWA / Master)</div>
+    </div>
+    <div class="preview-card">
+      <canvas id="c180" width="180" height="180"></canvas>
+      <div>180 x 180 (Apple Touch)</div>
+    </div>
+    <div class="preview-card">
+      <canvas id="c32" width="32" height="32" style="width: 96px; height: 96px; image-rendering: pixelated;"></canvas>
+      <div>32 x 32 (Standard Tab)</div>
+    </div>
+    <div class="preview-card">
+      <canvas id="c16" width="16" height="16" style="width: 48px; height: 48px; image-rendering: pixelated;"></canvas>
+      <div>16 x 16 (Compact Tab)</div>
+    </div>
+  </div>
+
+  <div id="status">INITIALIZING RENDERING ENGINE...</div>
+
+  <script>
+    async function runGenerator() {
+      // Ensure fonts are loaded
+      await document.fonts.ready;
+      await new Promise(r => setTimeout(r, 400));
+
+      const sizes = [
+        { id: 'c512', size: 512, name: 'favicon-512x512.png' },
+        { id: 'c192', size: 192, name: 'android-chrome-192x192.png' },
+        { id: 'c180', size: 180, name: 'apple-touch-icon.png' },
+        { id: 'c32', size: 32, name: 'favicon-32x32.png' },
+        { id: 'c16', size: 16, name: 'favicon-16x16.png' }
+      ];
+
+      // Draw vector KK monogram on canvas
+      function drawFavicon(canvas, sz) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, sz, sz);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+
+        const scale = sz / 512;
+
+        // 1. Draw Background Squircle
+        const radius = 104 * scale;
+        const pad = 16 * scale;
+        const boxSize = 480 * scale;
+
+        const bgGrad = ctx.createLinearGradient(0, 0, sz, sz);
+        bgGrad.addColorStop(0, '#9B2232');
+        bgGrad.addColorStop(0.45, '#7D1826');
+        bgGrad.addColorStop(1, '#460B13');
+
+        ctx.fillStyle = bgGrad;
+        ctx.beginPath();
+        ctx.roundRect(pad, pad, boxSize, boxSize, radius);
+        ctx.fill();
+
+        // 2. Outer Gold Frame
+        const goldGrad = ctx.createLinearGradient(0, 0, sz, sz);
+        goldGrad.addColorStop(0, '#FBF2DC');
+        goldGrad.addColorStop(0.4, '#E5C78A');
+        goldGrad.addColorStop(1, '#BA8B38');
+
+        ctx.strokeStyle = goldGrad;
+        ctx.lineWidth = Math.max(1.2, 3.5 * scale);
+        ctx.beginPath();
+        ctx.roundRect(34 * scale, 34 * scale, 444 * scale, 444 * scale, 86 * scale);
+        ctx.stroke();
+
+        // 3. Inner Dashed Hairline (only for larger sizes >= 180)
+        if (sz >= 180) {
+          ctx.strokeStyle = 'rgba(248, 245, 238, 0.28)';
+          ctx.lineWidth = 1.2 * scale;
+          ctx.setLineDash([10 * scale, 5 * scale]);
+          ctx.beginPath();
+          ctx.roundRect(46 * scale, 46 * scale, 420 * scale, 420 * scale, 76 * scale);
+          ctx.stroke();
+          ctx.setLineDash([]); // reset
+
+          // Corner diamonds
+          const diamonds = [
+            [56, 56], [456, 56], [56, 456], [456, 456]
+          ];
+          ctx.fillStyle = goldGrad;
+          diamonds.forEach(([x, y]) => {
+            const cx = x * scale;
+            const cy = y * scale;
+            const s = 4.5 * scale;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - s);
+            ctx.lineTo(cx + s, cy);
+            ctx.lineTo(cx, cy + s);
+            ctx.lineTo(cx - s, cy);
+            ctx.closePath();
+            ctx.fill();
+          });
+
+          // Top diamond crest
+          const starY = 88 * scale;
+          const starX = 256 * scale;
+          const starS = 13 * scale;
+          ctx.beginPath();
+          ctx.moveTo(starX, starY - starS);
+          ctx.quadraticCurveTo(starX, starY, starX + starS, starY);
+          ctx.quadraticCurveTo(starX, starY, starX, starY + starS);
+          ctx.quadraticCurveTo(starX, starY, starX - starS, starY);
+          ctx.quadraticCurveTo(starX, starY, starX, starY - starS);
+          ctx.closePath();
+          ctx.fill();
+
+          // Bottom divider rule
+          const divY = 388 * scale;
+          ctx.strokeStyle = goldGrad;
+          ctx.lineWidth = 2.5 * scale;
+          ctx.beginPath();
+          ctx.moveTo((256 - 140) * scale, divY);
+          ctx.lineTo((256 - 28) * scale, divY);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo((256 + 28) * scale, divY);
+          ctx.lineTo((256 + 140) * scale, divY);
+          ctx.stroke();
+
+          // Center diamond in divider
+          ctx.beginPath();
+          ctx.moveTo(256 * scale, divY - 7 * scale);
+          ctx.lineTo((256 + 7) * scale, divY);
+          ctx.lineTo(256 * scale, divY + 7 * scale);
+          ctx.lineTo((256 - 7) * scale, divY);
+          ctx.closePath();
+          ctx.fill();
+
+          // Archival subtitle
+          ctx.font = `700 ${Math.round(24 * scale)}px 'Cinzel', serif`;
+          ctx.fillStyle = goldGrad;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'alphabetic';
+          ctx.fillText('SHARMA', 256 * scale, 426 * scale);
+        }
+
+        // 4. Stately Monogram KK
+        // For tiny sizes (16, 32), make KK even more prominent and centered
+        let fontSize, yPos;
+        if (sz <= 32) {
+          fontSize = Math.round(sz * 0.58);
+          yPos = Math.round(sz * 0.72);
+        } else if (sz <= 64) {
+          fontSize = Math.round(sz * 0.52);
+          yPos = Math.round(sz * 0.70);
+        } else {
+          fontSize = Math.round(238 * scale);
+          yPos = Math.round(336 * scale);
+        }
+
+        ctx.font = `900 ${fontSize}px 'Cinzel', 'Playfair Display', Georgia, serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'alphabetic';
+
+        // Drop shadow
+        if (sz >= 32) {
+          ctx.shadowColor = 'rgba(30, 3, 7, 0.75)';
+          ctx.shadowBlur = Math.max(1, 8 * scale);
+          ctx.shadowOffsetY = Math.max(1, 6 * scale);
+        }
+
+        // Ivory gradient fill
+        const ivoryGrad = ctx.createLinearGradient(0, yPos - fontSize, 0, yPos);
+        ivoryGrad.addColorStop(0, '#FFFFFF');
+        ivoryGrad.addColorStop(0.7, '#F7F1E5');
+        ivoryGrad.addColorStop(1, '#E8DCBE');
+        ctx.fillStyle = ivoryGrad;
+
+        // Render KK
+        ctx.fillText('KK', (sz / 2), yPos);
+        ctx.shadowColor = 'transparent'; // reset
+      }
+
+      // Draw all sizes
+      const pngPayload = {};
+
+      for (const item of sizes) {
+        let canvas = document.getElementById(item.id);
+        if (!canvas) {
+          canvas = document.createElement('canvas');
+          canvas.width = item.size;
+          canvas.height = item.size;
+        }
+        drawFavicon(canvas, item.size);
+        pngPayload[item.name] = canvas.toDataURL('image/png');
+      }
+
+      document.getElementById('status').textContent = 'UPLOADING ASSETS TO SERVER...';
+
+      // Send to server
+      try {
+        const resp = await fetch('/api/save-favicons', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pngs: pngPayload })
+        });
+        const res = await resp.json();
+        if (res.success) {
+          document.getElementById('status').innerHTML = '✅ ALL FAVICONS GENERATED & SAVED TO ASSETS SUCCESSFULLY!';
+          document.getElementById('status').style.color = '#74D99F';
+        } else {
+          document.getElementById('status').textContent = 'ERROR: ' + res.error;
+          document.getElementById('status').style.color = '#FF6B6B';
+        }
+      } catch (err) {
+        document.getElementById('status').textContent = 'NETWORK ERROR: ' + err.message;
+        document.getElementById('status').style.color = '#FF6B6B';
+      }
+    }
+
+    window.addEventListener('load', runGenerator);
+  </script>
+</body>
+</html>
